@@ -1,7 +1,8 @@
 import { initiateProfile } from "@/lib/initiate-profile";
-import Workspace from "../components/Workspace";
-import FileInfoFormModal from "@/components/Form/FormDialogue";
+import Workspace from "../components/workspace/Workspace";
+import FileInfoFormModal from "@/components/modal/FormDialogue";
 import { redirectToSignIn } from "@clerk/nextjs";
+import axios from "axios";
 export default async function Home() {
   const profile = await initiateProfile();
   console.log({ profile });

@@ -22,7 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { DataTableViewOptions } from "./column-toggle";
 import { SelectedRowActions } from "./selected-rows-menu";
-import { usePathname, useSearchParams } from "next/navigation";
+import { redirect, usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {

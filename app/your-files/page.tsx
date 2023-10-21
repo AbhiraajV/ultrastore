@@ -4,6 +4,8 @@ import { currentProfile } from "@/lib/current-profile";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import ServerControlledPagination from "./server-controlled-pagination";
+import PaymentFormModalDialogue from "@/components/modal/PaymentFormModalDialogue";
+import DeleteFileFormModalDialogue from "@/components/modal/DeleteFileModal";
 type Props = {
   searchParams: any;
 };
@@ -39,6 +41,8 @@ async function YourFiles({ searchParams }: Props) {
   });
   return (
     <>
+      <PaymentFormModalDialogue />
+      <DeleteFileFormModalDialogue />
       <DataTable columns={columns} data={files} />
       <ServerControlledPagination count={count} curlen={files.length} />
     </>

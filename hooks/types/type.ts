@@ -68,7 +68,33 @@ export interface FormModalToggleSliceType {
   isOpen: boolean;
   toggle: () => void;
 }
+export interface PaymentModalToggleSliceType {
+  isPaymentModalOpen: boolean;
+  paymentForFileId: string;
+  paymentByUserId: string;
+  togglePaymentModalOpen: () => void;
+  updatePaymentState: ({
+    fileId,
+    userId,
+  }: {
+    fileId: string;
+    userId: string;
+  }) => void;
+}
 
+export interface DeleteFileModalToggleSliceType {
+  isDeleteFileModalOpen: boolean;
+  DeleteFileForFileId: string;
+  DeleteFileByUserId: string;
+  toggleDeleteFileModalOpen: () => void;
+  updateDeleteFileState: ({
+    fileId,
+    userId,
+  }: {
+    fileId: string;
+    userId: string;
+  }) => void;
+}
 export interface LoadingBlockSliceType {
   isLoading: boolean;
   toggleLoading: () => void;
@@ -78,3 +104,5 @@ export interface ProfileDataSliceType {
   profileData: Profile;
   setProfileData: (profile: Profile) => void;
 }
+export const STRIPE_APIKEY =
+  "pk_test_51NzYE6SDYYQh4TLS8NciMOzSVHM94qVvY0lp61ohjQGnoh4Zmk0L1Ol5vvywBBNrTk8qQoGQFyQT7jr9C83uXAKR00gy4D3eBF";

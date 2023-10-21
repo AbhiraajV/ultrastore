@@ -1,10 +1,18 @@
 import { initializeApp } from "firebase/app";
 import { v4 as uuidV4 } from "uuid";
 // import { getAnalytics } from "firebase/analytics";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 import { PrismFileWithAdditionalFile } from "@/hooks/types/type";
 import { createFile } from "../file-prisma";
 import { Profile } from "@prisma/client";
+
+import { ReadStream, createReadStream, createWriteStream, readdir } from "fs";
 const firebaseConfig = {
   apiKey: "AIzaSyC5nSbnSe5QzOatP8-wXdPtZeC0nCA52kg",
   authDomain: "ultrastore.firebaseapp.com",
@@ -17,7 +25,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);
-// const analytics = getAnalytics(app);
+
 export const uploadZipFunction = async (
   zipBlob: Blob | undefined,
   fileData: PrismFileWithAdditionalFile,
@@ -41,3 +49,37 @@ export const uploadZipFunction = async (
       console.error("Error uploading zip file:", error);
     });
 };
+export const deleteFile = async (firestoreZipUrl: string) => {
+  try {
+    if (!firestoreZipUrl)
+      return { fileDeleted: false, message: "firestore file url not found" };
+    const deleted = await deleteObject(ref(storage, firestoreZipUrl));
+    return { fileDeleted: true, message: deleted };
+  } catch (error) {
+    console.log({ error });
+    return { fileDeleted: false, message: error };
+  }
+};
+
+export async function downloadFileFromFirestore(filePath: string) {
+  try {
+    const downloadURL = await getDownloadURL(ref(storage, filePath));
+    const response = await fetch(downloadURL);
+
+    if (!response.ok) {
+      throw new Error("Failed to download the file.");
+    }
+
+    const blob = await response.blob();
+
+    // Get the file name from the path or use a custom name
+    const fileName = filePath.split("/").pop();
+
+    // Use the 'file-saver' library to trigger the download
+    console.log("File download successful");
+    return blob;
+  } catch (error) {
+    console.error("Error downloading the file:", error);
+    return undefined;
+  }
+}

@@ -18,6 +18,7 @@ model Profile {
 
  youtubeAccessToken String? @db.Text
  youtubeRefreshToken String? @db.Text
+ youtubeTokenExpiry DateTime?
 
  files File[]
 
@@ -37,7 +38,9 @@ model File {
   youtubeUrl String? @unique
   firestoreZipUrl String @unique
   decodedFileFirestoreUrl String? @unique
-
+  
+  priority Boolean? @default(false)
+ 
   profileId String
   profile Profile @relation(fields: [profileId], references: [id],onDelete: Cascade)
 

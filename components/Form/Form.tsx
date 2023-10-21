@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
 import { FileUploader } from "react-drag-drop-files";
 import { useState } from "react";
-import DisplayBlob from "../DisplayBlob";
+import DisplayBlob from "../workspace/DisplayBlob";
 import useStore from "@/hooks/useStore";
 const formSchema = z.object({
   title: z.string().min(2, {
